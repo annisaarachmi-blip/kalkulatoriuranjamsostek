@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulasi Perhitungan Iuran Penerima Upah (PU)</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== TEMPLATE CSS ASLI ===== */
+@media(max-width:700px){
+  .result-wrap{
+    flex-direction:column;
+  }
+
+  .compact-table table{
+    min-width:100%;
+  }
+
+  #kesimpulan{
+    max-width:100%;
+  }
+}
+.compact-table{
+  width:fit-content;   /* ⬅️ BIAR NGIKUT ISI */
+  max-width:100%;
+}
+
+.compact-table table{
+  width:auto;          /* ⬅️ JANGAN 100% */
+  min-width:560px;     /* ⬅️ BISA DIKECILIN LAGI */
+}
+
+.result-wrap{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  flex-wrap:wrap; /* biar turun di mobile */
+}
+.kontrak-row{
+  display:flex;
+  gap:14px;
+  align-items:flex-end;
+  flex-wrap:wrap;
+}
+
+.kontrak-input{
+  min-width:220px;
+  flex:0 0 220px;
+}
+
+.kontrak-info{
+  font-size:13px;
+  color:#555;
+  max-width:260px;
+  line-height:1.4;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  .kontrak-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .kontrak-info{
+    max-width:100%;
+  }
+}
+
+.tr-active {
+  background: #eef4ff;
+  font-weight: 600;
+  border-left: 4px solid #0a4fb3;
+}
+.option-row{
+  display:flex;
+  gap:10px;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
+
+.option-card{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:1px solid #d0d7e2;
+  border-radius:12px;
+  cursor:pointer;
+  background:#fff;
+}
+
+.option-card input{
+  display:none;
+}
+
+.option-card span{
+  font-size:13px;
+}
+
+.option-card small{
+  display:block;
+  font-size:12px;
+  color:#666;
+}
+
+.option-card:has(input:checked){
+  border-color:#0a4fb3;
+  background:#eef4ff;
+}
+
+.option-card.disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.option-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.option-card{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 12px;
+  border:1.5px solid #d0d7e2;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .2s ease;
+  background:#fff;
+  width:auto;
+}
+
+.option-card input{
+  display:none;
+}
+
+.option-card span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.option-card strong{
+  font-weight:600;
+}
+
+.option-card small{
+  font-size:12px;
+  color:#666;
+}
+
+.option-card:hover{
+  border-color:#0a4fb3;
+}
+
+.option-card:has(input:checked){
+  background:#eef4ff;
+  border-color:#0a4fb3;
+}
+
+.option-card:has(input:checked) strong{
+  color:#0a4fb3;
+}
+
+.option-card.disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.btn-primary{
+  padding:4px 10px;
+  font-size:12px;
+  border-radius:999px;
+  line-height:1.1;
+}
+.action-row button{
+  width:auto;          /* ⬅️ INI KUNCINYA */
+  min-width:auto;
+}
+.btn-primary{
+  background:#0a4fb3;
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+  line-height:1.2;
+}
+
+.btn-primary:hover{
+  background:#083a86;
+}
+
+.btn-danger{
+  background:#FF0000;
+  color:#FFFFFF;
+  border:1.2px solid #d93025;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+  line-height:1.2;
+}
+
+.btn-danger:hover{
+  background:#FF0000;
+}
+
+
+
+body{
+  font-family:'Nunito Sans',sans-serif;
+  background:#f4f6f9;
+  margin:0;
+  padding:20px;
+}
+.container{
+  max-width:960px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+}
+h2{
+  text-align:center;
+  color:#0a4fb3;
+  margin-bottom:10px;
+}
+.section{
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:14px;
+  margin-top:15px;
+}
+label{font-size:14px;display:block;margin-bottom:6px;}
+input,select,button{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  font-size:14px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+button{
+  background:#0a4fb3;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+button:hover{background:#083a86}
+.table-wrap{overflow-x:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th,td{
+  border:1px solid #ccc;
+  padding:6px 8px;
+  text-align:center;
+  font-size:13px;
+}
+th{background:#f1f5ff}
+.summary{
+  background:#eef6ff;
+  padding:12px;
+  margin-top:10px;
+  border-left:5px solid #0a4fb3;
+}
+.form-grid-3{
+  display:grid;
+  grid-template-columns:300px 140px 160px;
+  gap:12px;
+}
+.form-grid-3 input{width:100%}
+@media(max-width:700px){
+  .form-grid-3{grid-template-columns:1fr;}
+}
+
+.form-grid-top{
+  display:grid;
+  grid-template-columns: 200px 220px 260px; /* ⬅️ KUNCI */
+  gap:12px;
+}
+@media(max-width:700px){
+  .form-grid-top{grid-template-columns:1fr;}
+}
+
+.checkbox-row{
+  display:flex;
+  gap:15px;
+  margin-top:10px;
+}
+
+/* ===== HASIL BPU VERSI COMPACT ===== */
+.bpu-result{
+  width:fit-content;
+  max-width:100%;
+  margin-top:15px;
+}
+
+.bpu-result table{
+  width:auto;
+}
+
+.bpu-result .summary{
+  max-width:100%;
+}
+
+.footer-note{
+  text-align:center;
+  font-size:12px;
+  color:#888;
+  margin-top:30px;
+}
+.summary{
+  font-size:15px;
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="container">
+
+  <h2>Simulasi Iuran BPJS Ketenagakerjaan</h2>
+
+  <div class="section" id="landingSection" style="justify-content:center" >
+    <label><b><center>Pilih Jenis Kepesertaan</center></b></label>
+
+    <div class="option-row" style="justify-content:center">
+	<label class="option-card">
+  <input type="radio" name="kepesertaan" onclick="showPU()">
+  <span>
+    <strong>PU</strong>
+    <small>Penerima Upah</small>
+  </span>
+</label>
+      <label class="option-card">
+        <input type="radio" name="kepesertaan" onclick="showBPU()">
+        <span>
+          <strong>BPU</strong>
+          <small>Bukan Penerima Upah</small>
+        </span>
+      </label>
+
+      
+
+<label class="option-card">
+  <input type="radio" name="kepesertaan" onclick="showJakon()">
+  <span>
+    <strong>JAKON</strong>
+    <small>Jasa Konstruksi</small>
+  </span>
+</label>
+    </div>
+	
+  </div>
+
+<div class="section" id="formBPU" style="display:none">
+
+  <h3>Perhitungan Iuran BPU</h3>
+
+<label><b>Pilih Jenis Pekerjaan</b> <i>(Untuk Diskon Iuran 50% - Sesuai PP 50/2025)</i></label>
+<div class="option-row">
+  <label class="option-card">
+    <input type="radio" name="sektorBPU" value="transport">
+    <span>
+      <strong>Transportasi</strong>
+      <small>Ojek Pangkalan, Ojek Online, Supir, Kurir, Logistik, dll</small>
+    </span>
+  </label>
+
+  <label class="option-card">
+    <input type="radio" name="sektorBPU" value="non">
+    <span>
+      <strong>Non Transportasi</strong>
+      <small>Petani, Nelayan, Pedagang, Freelancer, Marbot, dll</small>
+    </span>
+  </label>
+</div>
+<br>
+<div class="form-grid-top">
+  <div>
+    <label><b>Penghasilan per Bulan (Rp)</b></label>
+    <input type="text" id="incomeBPU" inputmode="decimal" value="3.000.000">
+  </div>
+
+  <div>
+    <label><b>Awal Bulan Perlindungan</b></label>
+    <input type="month" id="awalBulanBPU">
+  </div>
+
+  <div>
+    <label><b>Bulan Perlindungan</b></label>
+    <input type="number" id="bulanBPU" value="12" min="1">
+  </div>
+</div>
+
+  <div class="option-row" style="margin-top:8px">
+  <label class="option-card">
+    <input type="checkbox" id="jhtBPU">
+    <span>
+      <strong>Tambah JHT</strong>
+      <small>2% dari penghasilan</small>
+    </span>
+  </label>
+</div>
+
+
+  <br>
+<div class="action-row">
+  <button class="btn-primary" onclick="hitungBPU()">Hitung</button>
+  <button class="btn-danger" onclick="resetBPU()">Reset</button>
+</div>	
+
+</div>
+<div class="section bpu-result" id="hasilBPU" style="display:none">
+
+  <h3>Hasil Simulasi BPU</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Program</th>
+          <th>Bulan</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="tabelBPU"></tbody>
+    </table>
+  </div>
+
+  <div class="summary" id="ringkasanBPU"></div>
+</div>
+
+<!-- ================= FORM PU ================= -->
+<div id="formPU" style="display:none" class="section">
+<h3>Perhitungan Iuran PU</h3>
+<!-- INPUT TOP -->
+
+<!-- INFO TARIF PU -->
+<div id="infoTarifPU"
+     class="section"
+     style="max-width:700px;margin-bottom:14px;padding:12px">
+
+  <h4 style="margin-top:0">Informasi Tarif Iuran PU</h4>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Program</th>
+          <th>Rate</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JKK -->
+        <tr>
+          <td>Jaminan Kecelakaan Kerja (JKK)</td>
+          <td>
+            0,24% | 0,54% | 0,89% | 1,27% | 1,74%
+          </td>
+          <td style="text-align:left">
+            Berdasarkan tingkat risiko usaha.<br>
+			Ditanggung oleh pemberi kerja.
+          </td>
+        </tr>
+
+        <!-- JKM -->
+        <tr>
+          <td>Jaminan Kematian (JKM)</td>
+          <td>0,3%</td>
+          <td style="text-align:left">
+            Ditanggung oleh pemberi kerja
+          </td>
+        </tr>
+
+        <!-- JHT -->
+        <tr>
+          <td>Jaminan Hari Tua (JHT)</td>
+          <td>
+            5,7%
+          </td>
+          <td style="text-align:left">
+            Pemberi kerja 3,7%<br>
+            Pekerja 2%
+          </td>
+        </tr>
+
+        <!-- JP -->
+        <tr>
+          <td>Jaminan Pensiun (JP)</td>
+          <td>
+            3%
+          </td>
+          <td style="text-align:left">
+            Pemberi kerja 2%<br>
+            Pekerja 1%
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <small style="color:#666;display:block;margin-top:8px">
+    Perhitungan iuran = Rate Per Program x Upah Sebulan
+  </small>
+</div>
+
+
+<div class="form-grid-top">
+  <div>
+    <label><b>Jumlah Orang</b></label>
+    <input type="number" id="org" min="1" value="2">
+  </div>
+  <div>
+    <label><b>Upah Bulanan (Rp)</b></label>
+    <input type="text" id="upah" inputmode="decimal" value="1.500.000">
+  </div>
+</div>
+
+<br>
+
+<!-- RISIKO -->
+<label><b>Jenis Usaha (Lampiran I PP 44/2015)</b></label>
+<div class="form-grid-3">
+  <input list="usahaList" id="jenisUsaha" placeholder="Ketik jenis usaha...">
+  <input type="text" id="tingkatRisiko" readonly placeholder="Tingkat Risiko">
+  <input type="text" id="rateJKK" readonly placeholder="Rate JKK (%)">
+</div>
+
+<datalist id="usahaList"></datalist>
+
+<!-- OPSI PROGRAM -->
+<div class="option-row">
+  <label class="option-card">
+    <input type="checkbox" id="jht">
+    <span>
+      <strong>Tambah JHT</strong>
+      <small>5,7%</small>
+    </span>
+  </label>
+
+  <label class="option-card disabled" id="jpCard">
+    <input type="checkbox" id="jp" disabled>
+    <span>
+      <strong>Tambah JP</strong>
+      <small>3%</small>
+    </span>
+  </label>
+</div>
+<div class="action-row">
+  <button class="btn-primary" onclick="hitungPU()">Hitung</button>
+  <button class="btn-danger" onclick="resetForm()">Reset</button>
+</div>
+
+</div>
+
+<!-- HASIL -->
+<div class="section" id="hasilSection" style="display:none;">
+  <h3>Hasil Simulasi</h3>
+   <div class="result-wrap">
+  <div class="table-wrap">
+   <table id="tabelHasil">
+  <tr>
+    <th>Program</th>
+
+    <th>Ditanggung Perusahaan</th>
+    <th>Ditanggung Pekerja</th>
+    <th>Iuran/Orang/Bulan</th>
+    <th>Total Keseluruhan</th>
+  </tr>
+</table>
+  </div>
+
+  <div class="summary" id="kesimpulan"></div>
+</div>
+</div>
+
+
+<!-- ================= FORM JASA KONSTRUKSI ================= -->
+<div class="section" id="formJakon" style="display:none">
+
+  <h3>Perhitungan Iuran JAKON</h3>
+  
+  <!-- INFO TARIF JAKON -->
+<div id="infoRangeJakon"
+     style="
+       display:none;
+       max-width:520px;
+       margin-bottom:12px;
+       padding:12px
+     ">
+  <h4 style="margin-top:0">Informasi Tarif Iuran Jasa Konstruksi</h4>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Nilai Kontrak</th>
+          <th>JKK</th>
+          <th>JKM</th>
+        </tr>
+      </thead>
+      <tbody>
+  <tr data-min="0" data-max="100000000">
+    <td>≤ Rp100.000.000</td>
+    <td>0,21%</td>
+    <td>0,03%</td>
+  </tr>
+
+  <tr data-min="100000001" data-max="500000000">
+    <td>Rp100.000.001 – Rp500.000.000</td>
+    <td>0,17%</td>
+    <td>0,02%</td>
+  </tr>
+
+  <tr data-min="500000001" data-max="1000000000">
+    <td>Rp500.000.001 – Rp1.000.000.000</td>
+    <td>0,13%</td>
+    <td>0,02%</td>
+  </tr>
+
+  <tr data-min="1000000001" data-max="5000000000">
+    <td>Rp1.000.000.001 – Rp5.000.000.000</td>
+    <td>0,11%</td>
+    <td>0,01%</td>
+  </tr>
+
+  <tr data-min="5000000001" data-max="999999999999">
+    <td>> Rp5.000.000.000</td>
+    <td>0,09%</td>
+    <td>0,01%</td>
+  </tr>
+</tbody>
+
+    </table>
+  </div>
+</div>
+
+
+  <div class="kontrak-row">
+  <div class="kontrak-input">
+    <label><b>Masukan Nilai Kontrak (Rp)</b></label>
+    <input type="text" id="nilaiKontrak" inputmode="decimal">
+  </div>
+
+  <div class="kontrak-info" id="infoTarifJakon"></div>
+</div>
+
+
+<bR>
+  <div class="action-row">
+    <button class="btn-primary" onclick="hitungJakon()">Hitung</button>
+    <button class="btn-danger" onclick="resetJakon()">Reset</button>
+  </div>
+
+</div>
+
+
+<!-- ================= HASIL JASA KONSTRUKSI ================= -->
+<div class="section bpu-result" id="hasilJakon" style="display:none">
+
+  <h3>Hasil Simulasi Jasa Konstruksi</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Program</th>
+          <th>Tarif</th>
+          <th>Iuran</th>
+        </tr>
+      </thead>
+      <tbody id="tabelJakon"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+<p class="Catatan">
+  <font size="1,5px">Keterangan : <br>
+  - Jaminan Kecelakaan Kerja (JKK) | Jaminan Kematian (JKM) | Jaminan Hari Tua (JHT) | Jaminan Pensiun (JP) <br>
+  - Brosur Manfaat Program BPJS Ketenagakerjaan
+    <a href="https://drive.google.com/file/d/1JkoL7o6aFq8yeSEdYyYzTttSYZzUFHKf/view?usp=sharing"
+       target="_blank" rel="noopener" >
+      (Download) </a>  
+    
+  </font><br>
+  
+  
+</p>
+ 
+</div>
+
+<div class="footer-note">© 2026. BPJS Ketenagakerjaan Kantor Wilayah Jawa Timur</div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+const kontrakInput = document.getElementById('nilaiKontrak');
+const kesimpulan = document.getElementById('kesimpulan');
+const hasilSection = document.getElementById('hasilSection');
+
+/* ====== DATA LAMPIRAN I PP 44/2015 ====== */
+
+const dataUsaha = [
+  // Risiko I
+  {usaha:"Pertanian, Perkebunan, Kehutanan", risiko:"I", rate:0.24},
+  {usaha:"Peternakan & Perikanan", risiko:"I", rate:0.24},
+  {usaha:"Jasa Pendidikan", risiko:"I", rate:0.24},
+  {usaha:"Perkantoran & Administrasi", risiko:"I", rate:0.24},
+
+  // Risiko II
+  {usaha:"Perdagangan Umum", risiko:"II", rate:0.54},
+  {usaha:"Perhotelan & Restoran", risiko:"II", rate:0.54},
+  {usaha:"Transportasi Darat", risiko:"II", rate:0.54},
+  {usaha:"Pergudangan", risiko:"II", rate:0.54},
+
+  // Risiko III
+  {usaha:"Industri Tekstil & Garmen", risiko:"III", rate:0.89},
+  {usaha:"Industri Makanan & Minuman", risiko:"III", rate:0.89},
+  {usaha:"Percetakan & Penerbitan", risiko:"III", rate:0.89},
+
+  // Risiko IV
+  {usaha:"Industri Kimia", risiko:"IV", rate:1.27},
+  {usaha:"Industri Logam & Mesin", risiko:"IV", rate:1.27},
+  {usaha:"Konstruksi Bangunan", risiko:"IV", rate:1.27},
+
+  // Risiko V
+  {usaha:"Pertambangan", risiko:"V", rate:1.74},
+  {usaha:"Konstruksi Berat & Migas", risiko:"V", rate:1.74}
+];
+
+// isi datalist
+const list = document.getElementById('usahaList');
+dataUsaha.forEach(d=>{
+  let opt = document.createElement('option');
+  opt.value = d.usaha;
+  list.appendChild(opt);
+});
+
+// auto isi risiko & rate
+const jenisUsaha = document.getElementById('jenisUsaha');
+jenisUsaha.addEventListener('input', ()=>{
+  let val = jenisUsaha.value;
+  let found = dataUsaha.find(d=>d.usaha.toLowerCase()===val.toLowerCase());
+  if(found){
+    document.getElementById('tingkatRisiko').value = found.risiko;
+    document.getElementById('rateJKK').value = found.rate;
+  }
+});
+
+// aturan JP aktif jika JHT dicentang
+const jht = document.getElementById('jht');
+const jp  = document.getElementById('jp');
+const jpCard = document.getElementById('jpCard');
+
+jht.addEventListener('change', ()=>{
+  jp.disabled = !jht.checked;
+  jp.checked = false;
+
+  jpCard.classList.toggle('disabled', !jht.checked);
+});
+
+window.showPU = function () {
+  formPU.style.display = 'block';
+  formBPU.style.display = 'none';
+  formJakon.style.display = 'none';
+
+  hasilBPU.style.display = 'none';
+  hasilJakon.style.display = 'none';
+
+  formPU.scrollIntoView({ behavior:'smooth' });
+};
+
+window.showBPU = function () {
+  formBPU.style.display = 'block';
+  formPU.style.display = 'none';
+  formJakon.style.display = 'none';
+
+  hasilSection.style.display = 'none';
+  hasilJakon.style.display = 'none';
+
+  formBPU.scrollIntoView({ behavior:'smooth' });
+};
+
+window.showJakon = function () {
+  formPU.style.display = 'none';
+  formBPU.style.display = 'none';
+  formJakon.style.display = 'block';
+
+  hasilSection.style.display = 'none';
+  hasilBPU.style.display = 'none';
+
+	 // 🔑 TAMPILKAN INFO TARIF
+  document.getElementById('infoRangeJakon').style.display = 'block';
+
+  formJakon.scrollIntoView({ behavior:'smooth' });
+};
+
+window.isDiskonBPU = function (sektor, dateObj) {
+  const y = dateObj.getFullYear();
+  const m = dateObj.getMonth(); // 0–11
+
+  // Transportasi: Jan 2026 – Mar 2027
+  if (sektor === 'transport') {
+    return (
+      (y === 2026) ||
+      (y === 2027 && m <= 2)
+    );
+  }
+
+  // Non Transportasi: Apr 2026 – Des 2026
+  if (sektor === 'non') {
+    return (y === 2026 && m >= 3 && m <= 11);
+  }
+
+  return false;
+};
+
+window.hitungBPU = function () {
+
+  // 1️⃣ AMBIL INPUT DULU
+  const sektor = document.querySelector('input[name="sektorBPU"]:checked')?.value;
+  const income = getNumericValue(document.getElementById('incomeBPU'));
+  const bulan = +document.getElementById('bulanBPU').value;
+  const awal = document.getElementById('awalBulanBPU').value;
+  const ikutJHT = document.getElementById('jhtBPU').checked;
+
+  // 2️⃣ VALIDASI
+  if (!sektor) return alert('Pilih jenis pekerjaan');
+  if (!awal) return alert('Pilih awal bulan perlindungan');
+  if (income <= 0) return alert('Masukkan penghasilan');
+
+  // 3️⃣ HITUNG JHT (SETELAH income ADA)
+  const iuranJHTBulanan = income * 0.02;
+  const totalJHT = ikutJHT ? iuranJHTBulanan * bulan : 0;
+
+  // 4️⃣ TARIF DASAR BPU
+  const JKK = 10000;
+  const JKM = 6800;
+  const iuranNormal = JKK + JKM;
+  const iuranDiskon = iuranNormal * 0.5;
+
+  // 5️⃣ HITUNG BULAN DISKON / NORMAL
+  let [y, m] = awal.split('-').map(Number);
+  let startDate = new Date(y, m - 1, 1);
+
+  let bulanNormal = 0;
+  let bulanDiskon = 0;
+  let totalNormal = 0;
+  let totalDiskon = 0;
+
+  for (let i = 0; i < bulan; i++) {
+    let current = new Date(startDate);
+    current.setMonth(startDate.getMonth() + i);
+
+    if (window.isDiskonBPU(sektor, current)) {
+      bulanDiskon++;
+      totalDiskon += iuranDiskon;
+    } else {
+      bulanNormal++;
+      totalNormal += iuranNormal;
+    }
+  }
+
+  // 6️⃣ TABEL HASIL
+  const tbody = document.getElementById('tabelBPU');
+  tbody.innerHTML = `
+    <tr>
+      <td>JKK + JKM (Normal)</td>
+      <td>${bulanNormal} bulan</td>
+      <td>Rp ${format(totalNormal)}</td>
+    </tr>
+
+    <tr>
+      <td>JKK + JKM (Diskon 50%)</td>
+      <td>${bulanDiskon} bulan</td>
+      <td>Rp ${format(totalDiskon)}</td>
+    </tr>
+
+    ${ikutJHT ? `
+    <tr>
+      <td>JHT</td>
+      <td>${bulan} bulan</td>
+      <td>Rp ${format(totalJHT)}</td>
+    </tr>` : ''}
+
+    <tr>
+      <th>Total</th>
+      <th>${bulan} bulan</th>
+      <th>Rp ${format(totalNormal + totalDiskon + totalJHT)}</th>
+    </tr>
+  `;
+const grandTotal = totalNormal + totalDiskon + totalJHT;
+  // 7️⃣ KESIMPULAN
+document.getElementById('ringkasanBPU').innerHTML = `
+<p style="font-size:15px"> 
+  Berdasarkan periode perlindungan yang dipilih, rincian iuran BPU adalah:
+</p>
+
+<ul>
+  <li style="font-size:15px">${bulanNormal} bulan iuran normal JKK-JKM → <b>Rp ${format(totalNormal)}</b></li>
+  <li style="font-size:15px">${bulanDiskon} bulan iuran Diskon 50% JKK-JKM → <b>Rp ${format(totalDiskon)}</b></li>
+  ${ikutJHT ? `<li style="font-size:15px">${bulan} bulan JHT → <b>Rp ${format(totalJHT)}</b></li>` : ''}
+</ul>
+
+<p style="font-size:15px">
+  <b>Total iuran yang harus dibayarkan: Rp ${format(grandTotal)}
+ </b> </span>
+</p>
+`;
+
+  document.getElementById('hasilBPU').style.display = 'block';
+};
+
+
+
+
+function format(n){return Number(n||0).toLocaleString('id-ID');}
+
+const upahInput = document.getElementById('upah');
+
+// format tampilan rupiah
+function formatRupiahInput(el){
+  let value = el.value
+    .replace(/[^\d,]/g, '')   // buang selain angka & koma
+    .replace(/,/g, '.');      // koma jadi desimal
+
+  let parts = value.split('.');
+  let integer = parts[0];
+  let decimal = parts[1] || '';
+
+  integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  el.value = decimal
+    ? integer + ',' + decimal.substring(0,2)
+    : integer;
+}
+
+// ambil nilai numerik asli
+function getNumericValue(el){
+  return parseFloat(
+    el.value
+      .replace(/\./g,'')
+      .replace(',','.')
+  ) || 0;
+}
+
+upahInput.addEventListener('input', ()=>{
+  formatRupiahInput(upahInput);
+});
+
+
+window.hitungPU = function () {
+  const org = +document.getElementById('org').value;
+  const bln = 1; // PU selalu per bulan
+  const upah = getNumericValue(document.getElementById('upah'));
+  const rateJKK = +document.getElementById('rateJKK').value;
+
+  if (rateJKK === 0) {
+    alert('Pilih jenis usaha');
+    return;
+  }
+
+  let tabel = document.getElementById('tabelHasil');
+  tabel.innerHTML = `
+    <tr>
+      <th>Program</th>
+      <th>Ditanggung Perusahaan</th>
+      <th>Ditanggung Pekerja</th>
+	   <th>Iuran/Bulan/Orang</th>
+    </tr>`;
+
+  let totalPerusahaanBln = 0;
+  let totalPekerjaBln = 0;
+
+  function row(nama, perOrg, pPerush, pPekerja) {
+  const iuranPerOrang = pPerush + pPekerja;
+  const totalBln = iuranPerOrang * org;
+  const totalAll = totalBln * bln;
+
+  tabel.innerHTML += `
+    <tr>
+      <td>${nama}</td>
+      <td>Rp ${format(pPerush)}</td>
+      <td>Rp ${format(pPekerja)}</td>
+	  <td>Rp ${format(perOrg)}</td>
+    </tr>
+  `;
+
+  // simpan total BULANAN
+  totalPerusahaanBln += pPerush * org;
+  totalPekerjaBln += pPekerja * org;
+}
+
+  // JKK – perusahaan
+  const jkk = upah * (rateJKK / 100);
+  row('JKK', jkk, jkk, 0);
+
+  // JKM – perusahaan
+  const jkm = upah * 0.003;
+  row('JKM', jkm, jkm, 0);
+
+  // JHT
+  if (jht.checked) {
+    row('JHT', upah * 0.057, upah * 0.037, upah * 0.02);
+  }
+
+  // JP
+  if (jp.checked) {
+    row('JP', upah * 0.03, upah * 0.02, upah * 0.01);
+  }
+
+  // ===== RINGKASAN (SESUAI VERSI LAMA) =====
+  tabel.innerHTML += `
+    
+    <tr>
+      <th colspan="3">Iuran Ditanggung Perusahaan</th>
+      <th>Rp ${format(totalPerusahaanBln * bln)}</th>
+    </tr>
+    <tr>
+      <th colspan="3">Iuran Ditanggung Pekerja</th>
+      <th>Rp ${format(totalPekerjaBln * bln)}</th>
+    </tr>
+    <tr>
+      <th colspan="3">Total Keseluruhan</th>
+      <th>Rp ${format((totalPerusahaanBln + totalPekerjaBln) * bln)}</th>
+    </tr>`;
+
+// ===== DAFTAR PROGRAM YANG DIIKUTI =====
+let daftarProgram = ['JKK', 'JKM']; // wajib
+
+if (jht.checked) daftarProgram.push('JHT');
+if (jp.checked) daftarProgram.push('JP');
+
+const jumlahProgram = daftarProgram.length;
+const namaProgram = daftarProgram.join(', ');
+
+ kesimpulan.innerHTML = `
+<p style="font-size:15px">
+  Berdasarkan data yang diinput, kepesertaan BPJS Ketenagakerjaan
+  yang diikuti terdiri dari <b>${jumlahProgram} program</b>,
+  yaitu <b>${namaProgram}</b>.
+</p>
+
+<p style="font-size:15px">
+  Total iuran BPJS Ketenagakerjaan yang wajib dibayarkan untuk
+  <b>${org} pekerja</b> <b>per bulan</b> adalah sebesar
+  <b>Rp ${format((totalPerusahaanBln + totalPekerjaBln))}</b>,
+  dengan rincian sebagai berikut:
+</p>
+
+<ul style="font-size:15px">
+  <li>Iuran yang ditanggung perusahaan sebesar
+      <b>Rp ${format(totalPerusahaanBln)}</b></li>
+  <li>Iuran yang ditanggung pekerja sebesar
+      <b>Rp ${format(totalPekerjaBln)}</b></li>
+</ul>
+`;
+
+  hasilSection.style.display = 'block';
+};
+
+
+
+window.hitungJakon = function () {
+    const nilaiInput = getNumericValue(kontrakInput);
+  if (nilaiInput <= 0) {
+    alert('Masukkan nilai kontrak');
+    return;
+  }
+
+  // 🔑 KUNCI: hitung DPP (tanpa PPN 11%)
+  const dpp = nilaiInput / 1.11;
+
+  const tarifJKK = getTarifJKK_Jakon(dpp);
+  const tarifJKM = getTarifJKM_Jakon(dpp);
+
+  const tarifJKKPersen = (tarifJKK * 100).toFixed(2);
+  const tarifJKMPersen = (tarifJKM * 100).toFixed(2);
+
+  const jkk = dpp * tarifJKK;
+  const jkm = dpp * tarifJKM;
+  const total = jkk + jkm;
+
+  const tbody = document.getElementById('tabelJakon');
+
+  tbody.innerHTML = `
+  
+  <tr>
+    <td>JKK</td>
+    <td>${tarifJKKPersen}%</td>
+    <td>Rp ${format(jkk)}</td>
+  </tr>
+  <tr>
+    <td>JKM</td>
+    <td>${tarifJKMPersen}%</td>
+    <td>Rp ${format(jkm)}</td>
+  </tr>
+  <tr>
+    <th>Total</th>
+    <th>-</th>
+    <th>Rp ${format(total)}</th>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:left;font-size:12px;color:#555">
+      Nilai Kontrak (Input): <b>Rp ${format(nilaiInput)}</b><br>
+      Dasar Pengenaan Iuran (tanpa PPN 11%): 
+      <b>Rp ${format(dpp)}</b>
+    </td>
+  </tr>
+`;
+document.getElementById('hasilJakon').querySelector('.summary')?.remove();
+
+const summary = document.createElement('div');
+summary.className = 'summary';
+summary.innerHTML = `
+  Berdasarkan nilai kontrak pekerjaan sebesar 
+  <b>Rp ${format(nilaiInput)}</b> (termasuk PPN 11%),
+  maka dasar pengenaan iuran BPJS Ketenagakerjaan
+  Jasa Konstruksi adalah sebesar
+  <b>Rp ${format(dpp)}</b>.
+  <br><br>
+  Total iuran program Jaminan Kecelakaan Kerja (JKK)
+  dan Jaminan Kematian (JKM) yang wajib dibayarkan
+  adalah sebesar <b>Rp ${format(total)}</b>,
+  dapat dibayarkan sekaligus atau secara termin.
+`;
+document.getElementById('hasilJakon').appendChild(summary);
+  hasilJakon.style.display = 'block';
+};
+
+
+
+
+
+
+function getTarifJKK_Jakon(n){
+  if(n <= 100_000_000) return 0.0021;
+  if(n <= 500_000_000) return 0.0017;
+  if(n <= 1_000_000_000) return 0.0013;
+  if(n <= 5_000_000_000) return 0.0011;
+  return 0.0009;
+}
+
+function getTarifJKM_Jakon(n){
+  if(n <= 100_000_000) return 0.0003;
+  if(n <= 500_000_000) return 0.0002;
+  if(n <= 1_000_000_000) return 0.0002;
+  if(n <= 5_000_000_000) return 0.0001;
+  return 0.0001;
+}
+
+// ================= EVENT LISTENER SETELAH SEMUA FUNCTION ADA =================
+
+// BPU
+const incomeBPUInput = document.getElementById('incomeBPU');
+incomeBPUInput.addEventListener('input', () => {
+  formatRupiahInput(incomeBPUInput);
+});
+
+// JAKON
+
+kontrakInput.addEventListener('input', () => {
+  formatRupiahInput(kontrakInput);
+
+  const nilaiInput = getNumericValue(kontrakInput);
+  const dpp = nilaiInput / 1.11;
+
+  const info = document.getElementById('infoTarifJakon');
+  const rows = document.querySelectorAll('#infoRangeJakon tbody tr');
+
+  // reset highlight
+  rows.forEach(r => r.classList.remove('tr-active'));
+
+  if (nilaiInput <= 0) {
+    info.innerText = '';
+    return;
+  }
+
+  // cari range yang sesuai DPP
+  rows.forEach(row => {
+    const min = Number(row.dataset.min);
+    const max = Number(row.dataset.max);
+
+    if (dpp >= min && dpp <= max) {
+      row.classList.add('tr-active');
+    }
+  });
+
+  // info singkat
+  info.innerText = `Dasar pengenaan iuran (tanpa PPN 11%): Rp ${format(dpp)}`;
+});
+
+window.resetForm= function (){
+  // reset input
+  document.getElementById('org').value = 100;
+  document.getElementById('bln').value = 12;
+  document.getElementById('upah').value = '';
+  document.getElementById('jenisUsaha').value = '';
+  document.getElementById('tingkatRisiko').value = '';
+  document.getElementById('rateJKK').value = '';
+
+  // reset checkbox
+  jht.checked = false;
+  jp.checked = false;
+  jp.disabled = true;
+  document.getElementById('jpCard')?.classList.add('disabled');
+
+  // sembunyikan hasil
+  document.getElementById('hasilSection').style.display = 'none';
+
+  // scroll ke atas biar jelas reset
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.resetBPU= function (){
+
+  // reset input
+  document.getElementById('incomeBPU').value = '';
+  document.getElementById('bulanBPU').value = 12;
+
+  // reset checkbox
+  document.getElementById('jhtBPU').checked = false;
+
+  // sembunyikan hasil
+  document.getElementById('hasilBPU').style.display = 'none';
+
+  // opsional: scroll ke atas form BPU
+  document.getElementById('formBPU')
+    .scrollIntoView({ behavior:'smooth' });
+}
+
+window.resetJakon= function (){
+  kontrakInput.value = '';
+  document.getElementById('hasilJakon').style.display = 'none';
+
+  document.getElementById('formJakon')
+    .scrollIntoView({ behavior:'smooth' });
+}
+});
+
+</script>
+</body>
+</html>
