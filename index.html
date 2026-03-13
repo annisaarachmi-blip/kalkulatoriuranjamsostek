@@ -653,9 +653,14 @@ th{background:#f1f5ff}
 </button>
 </div>
   
-<div class="section bpu-result" id="estimasiJHTBoxBPU" style="display:none">
-<h3 style="margin-top:5px;margin-bottom:2px">Manfaat yang Didapatkan</h3>
-<h4 style="margin-bottom:0;margin-top:0">💰 Estimasi Saldo JHT</h4>
+<div class="section bpu-result" id="estimasiJHTBoxBPU" style="
+       display:none;
+       max-width:600px;
+       margin-bottom:12px;
+       padding:12px
+     ">
+<h3 style="margin-top:5px;margin-bottom:2px">Manfaat Jaminan Hari Tua</h3>
+<h5 style="margin-bottom:0;margin-top:0">💰 Estimasi Saldo JHT</h5>
 <div class="table-wrap">
 <table id="tabelEstimasiJHTBPU">
 <thead>
@@ -670,14 +675,17 @@ th{background:#f1f5ff}
 </table>
 </div>
 <small style="color:#666">
-Simulasi menggunakan asumsi pengembangan dana 5% per tahun.
+Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak berubah.
 </small>
 <br>
 <br>
 
+<div class="summary" id="grafikJHTBoxBPU" style="display:none">
+
 <h4 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h4>
 <div style="width:100%;max-width:1000px;margin:auto">
 <canvas id="grafikJHTBPU" height="170"></canvas>
+</div>
 </div>
 
 
@@ -833,9 +841,14 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun.
 </button>
 </div>
 
-  <div class="section" id="estimasiJHTBox" style="display:none">
-<h3 style="margin-top:5px;margin-bottom:1px">Manfaat yang Didapatkan</h3>
-<h4 style="margin-bottom:1px;margin-top:0">💰 Estimasi Saldo JHT</h4>
+  <div class="section" id="estimasiJHTBox" style="
+       display:none;
+       max-width:600px;
+       margin-bottom:12px;
+       padding:12px
+     ">
+<h3 style="margin-top:5px;margin-bottom:1px">Manfaat Jaminan Hari Tua</h3>
+<h5 style="margin-bottom:1px;margin-top:0">💰 Estimasi Saldo JHT</h5>
 <div class="result-wrap">
 <div class="table-wrap">
 <table style="margin-top:0" id="tabelEstimasiJHT">
@@ -858,7 +871,7 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun.
 Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan upah tidak berubah.
 </small>
 
-<div class="summary" id="grafikJHTBox" style="display:none">
+<div class="summary" id="grafikJHTBoxPU" style="display:none">
 <h4 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h4>
 
 <div style="width:100%;max-width:1000px;margin:auto">
@@ -876,8 +889,6 @@ Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
 
 
 
-
-
 <!-- ================= FORM JASA KONSTRUKSI ================= -->
 <div class="section" id="formJakon" style="display:none">
 
@@ -887,7 +898,7 @@ Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
 <div id="infoRangeJakon"
      style="
        display:none;
-       max-width:520px;
+       max-width:550px;
        margin-bottom:12px;
        padding:12px
      ">
@@ -925,7 +936,7 @@ Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
     <td>0,11%</td>
     <td>0,01%</td>
   </tr>
-
+	
   <tr data-min="5000000001" data-max="999999999999">
     <td>> Rp5.000.000.000</td>
     <td>0,09%</td>
@@ -981,6 +992,141 @@ Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
   🖨 Cetak PDF
 </button>
 </div>
+<!-- ================= MANFAAT JKK & JKM ================= -->
+<div class="section" id="manfaatProgram" 
+style="
+       display:none;
+       max-width:600px;
+       margin-bottom:12px;
+       padding:12px
+     ">
+
+<h4 style="margin-top:5px;margin-bottom:5px">Manfaat Jaminan Kecelakaan Kerja dan Jaminan Kematian</h4>
+
+<div class="table-wrap">
+<table>
+
+<thead>
+<tr>
+<th>Program</th>
+<th>Manfaat</th>
+<th>Perhitungan</th>
+<th>Estimasi Nilai</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td rowspan="12"><b>JKK</b></td>
+<td>Rehabilitasi Medik</td>
+<td>-</td>
+<td>Sesuai kebutuhan medis</td>
+</tr>
+
+<tr>
+<td>Biaya transportasi</td>
+<td>-</td>
+<td>- Darat Rp 5.000.000
+<br>- Laut Rp 2.000.000
+<br>- Udara Rp 10.000.000</td>
+</tr>
+
+<tr>
+<td>STMB (12 bulan pertama)</td>
+<td>100% × Upah</td>
+<td id="jkk_stmb"></td>
+</tr>
+
+<tr>
+<td>STMB bulan berikutnya</td>
+<td>50% × Upah</td>
+<td id="jkk_stmb50"></td>
+</tr>
+
+<tr>
+<td>Cacat Total Tetap</td>
+<td>70% × 80 × Upah</td>
+<td id="jkk_cacat_total"></td>
+</tr>
+
+<tr>
+<td>Meninggal akibat kecelakaan kerja</td>
+<td>48 × Upah</td>
+<td id="jkk_meninggal"></td>
+</tr>
+
+<tr>
+<td>Biaya Pemakaman JKK Meninggal</td>
+<td>-</td>
+<td>Rp 10.000.000</td>
+</tr>
+
+<tr>
+<td>Beasiswa Anak</td>
+<td>2 Anak Maks</td>
+<td>Rp 174.000.000</td>
+</tr>
+
+
+
+<tr>
+<td>Penggantian Gigi Tiruan</td>
+<td>-</td>
+<td>Rp 5.000.000</td>
+</tr>
+
+<tr>
+<td>Kacamata</td>
+<td>-</td>
+<td>Rp 1.000.000</td>
+</tr>
+
+<tr>
+<td>Alat Bantu Dengar</td>
+<td>-</td>
+<td>Rp 2.500.000</td>
+</tr>
+
+<tr>
+<td>Biaya Homecare</td>
+<td>Maks 1 Tahun</td>
+<td>Rp 20.000.000</td>
+</tr>
+
+
+<tr>
+<td rowspan="3"><b>JKM</b></td>
+<td>Santunan Kematian</td>
+<td>-</td>
+<td>Rp 20.000.000</td>
+</tr>
+
+<tr>
+<td>Santunan Berkala</td>
+<td>-</td>
+<td>Rp 12.000.000</td>
+</tr>
+
+<tr>
+<td>Biaya Pemakaman</td>
+<td>-</td>
+<td>Rp 10.000.000</td>
+</tr>
+
+<tr>
+<td></td>
+<td><b>Total Santunan JKM</b></td>
+<td></td>
+<td><b>Rp 42.000.000</b></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+</div>
+
 
 <div class="footer">
 <p class="Catatan">
@@ -1010,6 +1156,8 @@ Klik / Arahkan kursor ke titik grafik untuk melihat estimasi saldo tiap tahun.
 </p>
  
 </div>
+
+
 
 <div class="footer-note">© 2026. BPJS Ketenagakerjaan Kantor Wilayah Jawa Timur</div>
 </div>
@@ -2195,6 +2343,8 @@ window.showPU = function () {
   document.getElementById("estimasiJHTBox").style.display = "none";
   document.getElementById("grafikJHTBox").style.display = "none";
 
+  document.getElementById("manfaatProgram").style.display = "none";
+  
   formPU.scrollIntoView({ behavior:'smooth' });
 };
 
@@ -2211,11 +2361,12 @@ window.showBPU = function () {
   // sembunyikan manfaat PU
   document.getElementById("estimasiJHTBox").style.display = "none";
   document.getElementById("grafikJHTBox").style.display = "none";
-
+document.getElementById("manfaatProgram").style.display = "none";
   formBPU.scrollIntoView({ behavior:'smooth' });
 };
 
 window.showJakon = function () {
+
   formPU.style.display = 'none';
   formBPU.style.display = 'none';
   formJakon.style.display = 'block';
@@ -2223,8 +2374,19 @@ window.showJakon = function () {
   hasilSection.style.display = 'none';
   hasilBPU.style.display = 'none';
 
-	 // 🔑 TAMPILKAN INFO TARIF
+  // tampilkan info tarif jakon
   document.getElementById('infoRangeJakon').style.display = 'block';
+
+  // sembunyikan manfaat program
+  document.getElementById("manfaatProgram").style.display = "none";
+
+  // sembunyikan estimasi JHT PU
+  document.getElementById("estimasiJHTBox").style.display = "none";
+  document.getElementById("grafikJHTBox").style.display = "none";
+
+  // sembunyikan estimasi JHT BPU
+  document.getElementById("estimasiJHTBoxBPU").style.display = "none";
+  document.getElementById("grafikJHTBoxBPU").style.display = "none";
 
   formJakon.scrollIntoView({ behavior:'smooth' });
 };
@@ -2344,7 +2506,8 @@ document.getElementById('ringkasanBPU').innerHTML = `
 
   document.getElementById('hasilBPU').style.display = 'block';
   document.getElementById('btnPrintBPU').style.display = 'inline-block';
-
+hitungManfaat(income);
+document.getElementById("manfaatProgram").style.display="block";
 if(ikutJHT){
 
 const estimasi = hitungEstimasiJHT(income * 0.02);
@@ -2384,6 +2547,7 @@ document.getElementById("estimasiJHTBoxBPU").style.display="none";
 document.getElementById("grafikJHTBoxBPU").style.display="none";
 
 }
+
 };
 
 
@@ -2424,6 +2588,26 @@ upahInput.addEventListener('input', ()=>{
 });
 
 
+function hitungManfaat(upah){
+
+const stmb = upah;
+const stmb50 = upah * 0.5;
+const cacatTotal = upah * 80 * 0.7;
+const meninggalJKK = upah * 48;
+
+document.getElementById("jkk_stmb").innerText =
+"Rp " + format(stmb) + " / bulan";
+
+document.getElementById("jkk_stmb50").innerText =
+"Rp " + format(stmb50) + " / bulan";
+
+document.getElementById("jkk_cacat_total").innerText =
+"Rp " + format(cacatTotal);
+
+document.getElementById("jkk_meninggal").innerText =
+"Rp " + format(meninggalJKK);
+
+}
 
 
 window.hitungPU = function () {
@@ -2594,6 +2778,9 @@ animateValue(el,0,val,1200);
 document.getElementById("estimasiJHTBox").style.display="none";
 document.getElementById("grafikJHTBox").style.display="none";
 }
+hitungManfaat(upah);
+document.getElementById("manfaatProgram").style.display="block";
+
 };
 
 window.hitungJKK_Jakon_Progresif = function(dpp){
@@ -2849,6 +3036,10 @@ Jaminan Kematian (JKM) yang wajib dibayarkan adalah sebesar
   document.getElementById('hasilJakon').appendChild(summary);
   document.getElementById('hasilJakon').style.display = 'block';
   document.getElementById('btnPrintJakon').style.display = 'inline-block';
+  
+  hitungManfaat(2000000);
+document.getElementById("manfaatProgram").style.display="block";
+
 };
 
 
@@ -2974,7 +3165,8 @@ window.resetForm = function(){
     sections:[
       'hasilSection',
       'estimasiJHTBox',
-      'grafikJHTBox'
+      'grafikJHTBox',
+	  'manfaatProgram'
     ],
 
     tables:[
@@ -3010,7 +3202,8 @@ window.resetBPU = function(){
     sections:[
       'hasilBPU',
       'estimasiJHTBoxBPU',
-      'grafikJHTBoxBPU'
+      'grafikJHTBoxBPU',
+	  'manfaatProgram'
     ],
 
     tables:[
@@ -3043,6 +3236,7 @@ window.resetJakon = function(){
 
   // sembunyikan hasil
   document.getElementById('hasilJakon').style.display = 'none';
+  document.getElementById('manfaatProgram').style.display = 'none';
 
   // sembunyikan tombol print
   document.getElementById('btnPrintJakon').style.display = 'none';
@@ -3063,7 +3257,6 @@ window.printSection = function(){
 
 </body>
 </html>
-
 
 
 
