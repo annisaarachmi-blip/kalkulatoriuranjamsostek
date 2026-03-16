@@ -677,22 +677,6 @@ margin-bottom:14px;
 color:#555;
 }
 
-.contact-body {
-  text-align: center;
-}
-
-.contact-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin: 6px 0;
-}
-
-.maps-btn {
-  display: inline-block;
-  margin-top: 10px;
-}
 </style>
 </head>
 <body>
@@ -1393,12 +1377,13 @@ Catatan: Estimasi manfaat Jaminan Kecelakaan Kerja (JKK) pada simulasi Jasa Kons
 <div class="contact-header">
 📞 Informasi Lebih Lanjut
 </div>
-<div class="contact-body">
-<div class="contact-row">
+<div class="contact-body" style="text-align:center;">
+<div class="contact-row"style="text-align:center;">
 <span class="icon">🏢</span>
 <span id="namaKantor"></span>
 </div>
-<div class="contact-row">
+<div id="jarakKantor" class="distance" style="text-align:center;"></div>
+<div class="contact-row" style="text-align:center;">
 <span class="icon">📍</span>
 <span id="alamatKantor"></span>
 </div>
