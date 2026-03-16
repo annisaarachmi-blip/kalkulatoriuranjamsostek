@@ -9,8 +9,6 @@
 <style>
 /* ===== TEMPLATE CSS ASLI ===== */
 
-
-
 body{
   font-family:Calibri, Arial, sans-serif;
   padding:20px;
@@ -440,6 +438,8 @@ th{background:#f1f5ff}
   font-size:15px;
 }
 
+
+
 @media print {
 
 /* halaman baru untuk manfaat */
@@ -537,6 +537,13 @@ th{background:#f1f5ff}
   
 
 }
+
+
+#hasilSimulasi{
+page-break-inside: avoid;
+}
+
+
 
 /* ===== CONTACT BPJS CARD ===== */
 
@@ -773,8 +780,7 @@ color:#555;
 </div>
 <div class="section bpu-result" id="hasilBPU" style="display:none">
 
-  <h3 style="margin-top:10px">Hasil Simulasi BPU</h3>
-
+  <h3 style="margin-top:5px;margin-bottom:5px">Hasil Simulasi BPU</h3>
   <div class="table-wrap">
     <table>
       <thead>
@@ -818,15 +824,16 @@ color:#555;
 <tbody></tbody>
 </table>
 </div>
-<small style="color:#666">
+
+<font size="0,5px" style="color:#666;text-align:justify">
 Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak berubah.
-</small>
+</font>
 <br>
 <br>
 
-<h4 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h4>
+<h5 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h5>
 <div style="width:100%;max-width:1000px;margin:auto">
-<canvas id="grafikJHTBPU" height="170"></canvas>
+<canvas id="grafikJHTBPU" height="140"></canvas>
 </div>
 
 
@@ -902,9 +909,10 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
       </tbody>
     </table>
   </div>
-  <small style="color:#666;display:block;margin-top:8px">
-    Perhitungan iuran = Rate Per Program x Upah Sebulan
-  </small>
+  <font size="1px" style="color:#666">
+Perhitungan iuran = Rate Per Program x Upah Sebulan
+</font>
+ 
 </div>
 
 
@@ -958,7 +966,7 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
 
 <!-- HASIL -->
 <div class="section" id="hasilSection" style="display:none;">
-  <h3 style=="margin-top:0px;margin-bottom:0px">Hasil Simulasi PU</h3>
+  <h3 style="margin-top:5px;margin-bottom:5px">Hasil Simulasi PU</h3>
    <div class="result-wrap">
   <div class="table-wrap">
    <table id="tabelHasil">
@@ -1009,15 +1017,15 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
 </table>
 </div>
 
-<font size="1px" style="color:#666">
-Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan upah tidak berubah.
+<font size="0,5px" style="color:#666;text-align:justify">
+Simulasi menggunakan asumsi Upah tetap, Iuran perusahaan 3,7%, Iuran pekerja 2%, Pengembangan 5% per tahun, Iuran dibayar tanggal 1 tiap bulan.
 </font>
 
 <div class="summary" id="grafikJHTBox" style="display:none">
 <h5 style="margin-top:0">📈 Grafik Pertumbuhan Estimasi Saldo JHT</h5>
 
 <div style="width:100%;max-width:1000px;margin:auto">
-<canvas id="grafikJHT" height="170"></canvas>
+<canvas id="grafikJHT" height="140"></canvas>
 </div>
 
 <small style="color:#666">
@@ -1090,7 +1098,7 @@ Manfaat Jaminan Pensiun
 </table>
 </div>
 <font size="1px" id="catatanJP" style="color:#666;margin-top:1px">
-(Manfaat JP Tahun 2026) Manfaat minimum : Rp 411.400 | Manfaat maksimum : Rp 4.932.300
+Manfaat minimum : Rp 411.400 | Manfaat maksimum : Rp 4.932.300 (Tahun 2026)
 </font>
 
 </div>
@@ -1179,7 +1187,7 @@ Manfaat Jaminan Pensiun
 <!-- ================= HASIL JASA KONSTRUKSI ================= -->
 <div class="section bpu-result" id="hasilJakon" style="display:none">
 
-  <h3>Hasil Simulasi Jasa Konstruksi</h3>
+  <h3 style="margin-top:5px;margin-bottom:5px">Hasil Simulasi Jasa Konstruksi</h3>
   <div class="table-wrap">
     <table>
       <thead>
@@ -1235,7 +1243,7 @@ style="
 <tr>
 <td>Biaya transportasi</td>
 <td>-</td>
-<td>- Darat Rp 5.000.000
+<td style="text-align:left">- Darat Rp 5.000.000
 <br>- Laut Rp 2.000.000
 <br>- Udara Rp 10.000.000</td>
 </tr>
@@ -1325,7 +1333,7 @@ style="
 <tr>
 <td></td>
 <td><b>Total Santunan JKM</b></td>
-<td></td>
+<td>-</td>
 <td><b>Rp 42.000.000</b></td>
 </tr>
 
