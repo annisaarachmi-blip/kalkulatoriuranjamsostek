@@ -622,6 +622,14 @@ margin-bottom:8px;
 font-weight:600;
 }
 
+#kontakBPJS{
+background:#f7f9fc;
+padding:15px;
+border-radius:10px;
+border:1px solid #e3e6ef;
+max-width:500px;
+margin:auto;
+}
 
 </style>
 </head>
@@ -1291,6 +1299,9 @@ Catatan: Estimasi manfaat Jaminan Kecelakaan Kerja (JKK) pada simulasi Jasa Kons
 
 </div>
 
+
+
+<div class="footer">
 <div id="kontakBPJS" class="contact-card">
 
 <div class="contact-header">
@@ -1322,9 +1333,6 @@ Kantor Cabang terdekat berdasarkan lokasi Anda.
 </div>
 
 </div>
-
-
-<div class="footer">
 <p class="Catatan">
   <font size="1,5px">Keterangan : <br>
   - Jaminan Kecelakaan Kerja (JKK) | Jaminan Kematian (JKM) | Jaminan Hari Tua (JHT) | Jaminan Pensiun (JP) <br>
@@ -2729,7 +2737,7 @@ document.getElementById('ringkasanBPU').innerHTML = `
 
   document.getElementById('hasilBPU').style.display = 'block';
   document.getElementById('btnPrintBPU').style.display = 'inline-block';
-  ambilLokasiUser();
+ 
 hitungManfaat(income);
 document.getElementById("manfaatProgram").style.display="block";
 if(ikutJHT){
@@ -2957,7 +2965,7 @@ const namaProgram = daftarProgram.join(', ');
 
   hasilSection.style.display = 'block';
   document.getElementById('btnPrintPU').style.display = 'inline-block';
-  ambilLokasiUser();
+
   
   if(jht.checked){
 
@@ -3265,7 +3273,6 @@ Jaminan Kematian (JKM) yang wajib dibayarkan adalah sebesar
   document.getElementById('hasilJakon').appendChild(summary);
   document.getElementById('hasilJakon').style.display = 'block';
   document.getElementById('btnPrintJakon').style.display = 'inline-block';
-  ambilLokasiUser();
   
   hitungManfaat(2000000);
 document.getElementById("manfaatProgram").style.display="block";
@@ -3495,34 +3502,34 @@ const kantorBPJS = [
 {nama:"BPJS Ketenagakerjaan Mojokerto", alamat:"Jl. Raya Tambakagung No. 54, Puri", lat:-7.5052, lng:112.4507},
 {nama:"BPJS Ketenagakerjaan Banyuwangi", alamat:"Jl. Jaksa Agung Suprapto No. 49", lat:-8.2079, lng:114.3686},
 {nama:"BPJS Ketenagakerjaan Madiun", alamat:"Jl. DI Panjaitan No. 10, Madiun", lat:-7.6393, lng:111.5284},
-{nama:"BPJS Ketenagakerjaan Blitar", alamat:"Jl. Palem No. 72, Rembang, Blitar", lat:-8.0934, lng:112.1681},
-{nama:"BPJS Ketenagakerjaan Madura", alamat:"Jl. KH Moh Kholil, Bangkalan", lat:-7.0454, lng:112.7363},
-{nama:"BPJS Ketenagakerjaan Bojonegoro", alamat:"Jl. Teuku Umar No. 1", lat:-7.1507, lng:111.8817},
-{nama:"BPJS Ketenagakerjaan Sidoarjo", alamat:"Jl. Raya Jati No. 14", lat:-7.4478, lng:112.7186},
-{nama:"BPJS Ketenagakerjaan Gresik", alamat:"Jl. Dr Wahidin Sudirohusodo", lat:-7.1569, lng:112.6554},
-{nama:"BPJS Ketenagakerjaan Surabaya Darmo", alamat:"Jl. Raya Darmo", lat:-7.2892, lng:112.7399},
-{nama:"BPJS Ketenagakerjaan Surabaya Tanjung Perak", alamat:"Jl. Perak Timur", lat:-7.2145, lng:112.7393},
-{nama:"BPJS Ketenagakerjaan Juanda", alamat:"Jl. Raya Juanda No. 52, Sedati", lat:-7.3818, lng:112.7516},
-{nama:"BPJS Ketenagakerjaan Lumajang", alamat:"Jl. Ahmad Yani", lat:-8.1335, lng:113.2244},
-{nama:"BPJS Ketenagakerjaan Probolinggo", alamat:"Jl. Panglima Sudirman", lat:-7.7543, lng:113.2159},
-{nama:"BPJS Ketenagakerjaan Pandaan", alamat:"Jl. Raya Pandaan", lat:-7.6527, lng:112.7043},
-{nama:"BPJS Ketenagakerjaan Jombang", alamat:"Jl. KH Wahid Hasyim", lat:-7.5454, lng:112.2337},
-{nama:"BPJS Ketenagakerjaan Tulungagung", alamat:"Jl. Pahlawan", lat:-8.0657, lng:111.9041},
-{nama:"BPJS Ketenagakerjaan Tuban", alamat:"Jl. Basuki Rahmat", lat:-6.8945, lng:112.0493},
-{nama:"BPJS Ketenagakerjaan Krian", alamat:"Jl. Raya Krian", lat:-7.4102, lng:112.5793},
-{nama:"BPJS Ketenagakerjaan Driyorejo", alamat:"Jl. Raya Driyorejo", lat:-7.3574, lng:112.6246},
-{nama:"BPJS Ketenagakerjaan Kepanjen", alamat:"Jl. Panji", lat:-8.1312, lng:112.5747},
-{nama:"BPJS Ketenagakerjaan Lamongan", alamat:"Jl. Basuki Rahmat", lat:-7.1167, lng:112.4167},
-{nama:"BPJS Ketenagakerjaan Sumenep", alamat:"Jl. Trunojoyo", lat:-7.0167, lng:113.8590},
-{nama:"BPJS Ketenagakerjaan Ponorogo", alamat:"Jl. Soekarno Hatta", lat:-7.8650, lng:111.4620},
-{nama:"BPJS Ketenagakerjaan Bondowoso", alamat:"Jl. Diponegoro", lat:-7.9137, lng:113.8210},
-{nama:"BPJS Ketenagakerjaan Ngawi", alamat:"Jl. Yos Sudarso", lat:-7.4049, lng:111.4461},
-{nama:"BPJS Ketenagakerjaan Pamekasan", alamat:"Jl. Jokotole", lat:-7.1568, lng:113.4746},
-{nama:"BPJS Ketenagakerjaan Trenggalek", alamat:"Jl. Soekarno Hatta", lat:-8.0553, lng:111.7161},
-{nama:"BPJS Ketenagakerjaan Situbondo", alamat:"Jl. Basuki Rahmat", lat:-7.7050, lng:113.9420},
-{nama:"BPJS Ketenagakerjaan Pacitan", alamat:"Jl. Basuki Rahmat", lat:-8.1942, lng:111.1057},
-{nama:"BPJS Ketenagakerjaan Batu", alamat:"Jl. Panglima Sudirman", lat:-7.8719, lng:112.5267},
-{nama:"BPJS Ketenagakerjaan Nganjuk", alamat:"Jl. Gatot Subroto", lat:-7.6051, lng:111.9041}
+{nama:"BPJS Ketenagakerjaan Blitar", alamat:"Jl. Palem No. 72, Rembang, Blitar", lat:-8.0934, lng:112.1764},
+{nama:"BPJS Ketenagakerjaan Madura (Bangkalan)", alamat:"Jl. Halim Perdana Kusuma No. 4", lat:-7.0371, lng:112.7533},
+{nama:"BPJS Ketenagakerjaan Bojonegoro", alamat:"Jl. Veteran No. 81, Bojonegoro", lat:-7.1652, lng:111.8943},
+{nama:"BPJS Ketenagakerjaan Sidoarjo", alamat:"Ruko Taman Pinang Indah Blok A2", lat:-7.4561, lng:112.7058},
+{nama:"BPJS Ketenagakerjaan Gresik", alamat:"Jl. Dr. Wahidin Sudirohusodo 121 A", lat:-7.1685, lng:112.6289},
+{nama:"BPJS Ketenagakerjaan Surabaya Darmo", alamat:"Jl. Diponegoro No. 6, Surabaya", lat:-7.2831, lng:112.7351},
+{nama:"BPJS Ketenagakerjaan Surabaya Tg Perak", alamat:"Jl. Perak Timur No. 82, Surabaya", lat:-7.2186, lng:112.7356},
+{nama:"BPJS Ketenagakerjaan Juanda", alamat:"Jl. Raya Juanda No. 52, Sidoarjo", lat:-7.3776, lng:112.7594},
+{nama:"BPJS Ketenagakerjaan Lumajang S. Riyadi", alamat:"Jl. Gatot Subroto No. 5 A", lat:-8.1142, lng:113.2201},
+{nama:"BPJS Ketenagakerjaan Probolinggo I. Bonjol", alamat:"Jl. Ahmad Yani No. 104", lat:-7.7475, lng:113.2144},
+{nama:"BPJS Ketenagakerjaan Pasuruan Pandaan", alamat:"Ruko The Orchard Tamandayu", lat:-7.6534, lng:112.6865},
+{nama:"BPJS Ketenagakerjaan Jombang W. Hasyim", alamat:"Ruko Cempaka Mas, Jl. Soekarno Hatta", lat:-7.5623, lng:112.2472},
+{nama:"BPJS Ketenagakerjaan Tulungagung Plosok.", alamat:"Jl. Mayor Sujadi No. 17", lat:-8.0734, lng:111.9191},
+{nama:"BPJS Ketenagakerjaan Tuban Wahidin", alamat:"Jl. W.R Supratman No. 62", lat:-6.8924, lng:112.0521},
+{nama:"BPJS Ketenagakerjaan Sidoarjo Krian", alamat:"Ruko Ladiva Junction, Sidomulyo", lat:-7.4063, lng:112.5852},
+{nama:"BPJS Ketenagakerjaan Gresik Driyorejo", alamat:"Jl. Raya Driyorejo No. 180 C", lat:-7.3592, lng:112.6243},
+{nama:"BPJS Ketenagakerjaan Malang Kepanjen", alamat:"Jl. Panji No. 88D, Kepanjen", lat:-8.1274, lng:112.5712},
+{nama:"BPJS Ketenagakerjaan Lamongan Sunan Giri", alamat:"Ruko LTC A26, Lamongan", lat:-7.1182, lng:112.4151},
+{nama:"BPJS Ketenagakerjaan Sumenep Trunojoyo", alamat:"Jl. Arya Wiraraja No. 39", lat:-7.0251, lng:113.8642},
+{nama:"BPJS Ketenagakerjaan Ponorogo S. Hatta", alamat:"Jl. Jend. Sudirman No. 23", lat:-7.8712, lng:111.4651},
+{nama:"BPJS Ketenagakerjaan Bondowoso Diponegoro", alamat:"Ruko A Yani Square Kav 3", lat:-7.9134, lng:113.8212},
+{nama:"BPJS Ketenagakerjaan Ngawi Sudirman", alamat:"Ruko Mojorejo Indah No. 50 C", lat:-7.4053, lng:111.4421},
+{nama:"BPJS Ketenagakerjaan Pamekasan Stadion", alamat:"Bani Regency, Barurambat Timur", lat:-7.1565, lng:113.4912},
+{nama:"BPJS Ketenagakerjaan Trenggalek S. Hatta", alamat:"Jl. Soekarno Hatta No. 44", lat:-8.0492, lng:111.7103},
+{nama:"BPJS Ketenagakerjaan Situbondo Kenanga", alamat:"Jl. Wijaya Kusuma No. 72", lat:-7.6961, lng:113.9972},
+{nama:"BPJS Ketenagakerjaan Pacitan B. Rahmat", alamat:"Jl. Letjend R Suprapto No. 7", lat:-8.2045, lng:111.0921},
+{nama:"BPJS Ketenagakerjaan Batu Kota", alamat:"Jl. Suropati Barat Kav 184 A", lat:-7.8754, lng:112.5182},
+{nama:"BPJS Ketenagakerjaan Nganjuk G. Subroto", alamat:"Jl. Ahmad Yani No. 318", lat:-7.6053, lng:111.9051}
 
 ];
 
@@ -3614,7 +3621,11 @@ document.getElementById("kontakBPJS").style.display="block";
 
 }
 
+window.addEventListener("load",function(){
 
+ambilLokasiUser();
+
+});
 
 </script>
 
