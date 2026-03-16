@@ -538,6 +538,84 @@ th{background:#f1f5ff}
 
 }
 
+/* ===== CONTACT BPJS CARD ===== */
+
+.contact-card{
+
+display:none;
+margin-top:16px;
+padding:16px;
+
+background:linear-gradient(135deg,#f8fbff,#eef4ff);
+
+border-radius:14px;
+border:1px solid #d6e2ff;
+
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+
+max-width:520px;
+
+}
+
+.contact-header{
+
+font-size:16px;
+font-weight:700;
+color:#0a4fb3;
+margin-bottom:10px;
+
+}
+
+.contact-body{
+
+font-size:14px;
+color:#333;
+
+}
+
+.contact-row{
+
+display:flex;
+align-items:flex-start;
+gap:10px;
+
+margin-bottom:8px;
+
+}
+
+.contact-row .icon{
+
+font-size:16px;
+width:22px;
+
+}
+
+.maps-btn{
+
+display:inline-block;
+margin-top:10px;
+
+background:#0a4fb3;
+color:#fff;
+
+padding:7px 14px;
+border-radius:999px;
+
+text-decoration:none;
+font-size:13px;
+font-weight:600;
+
+transition:all .2s ease;
+
+}
+
+.maps-btn:hover{
+
+background:#083a86;
+transform:translateY(-1px);
+
+}
+
 
 </style>
 </head>
@@ -849,6 +927,39 @@ Simulasi menggunakan asumsi pengembangan dana 5% per tahun dan penghasilan tidak
         onclick="printSection('hasilSection')">
   🖨 Cetak PDF
 </button>
+
+<div id="kontakBPJS" class="contact-card">
+
+<div class="contact-header">
+📞 Butuh Bantuan Pendaftaran?
+</div>
+
+<div class="contact-body">
+
+<div class="contact-row">
+<span class="icon">🏢</span>
+<span id="namaKantor"></span>
+</div>
+
+<div class="contact-row">
+<span class="icon">📍</span>
+<span id="alamatKantor"></span>
+</div>
+
+<div class="contact-row">
+<span class="icon">☎️</span>
+<span id="telpKantor"></span>
+</div>
+
+<a id="mapsKantor" class="maps-btn" target="_blank">
+📍 Buka di Google Maps
+</a>
+
+</div>
+
+</div>
+
+
 </div>
 
   <div class="section" id="estimasiJHTBox" style="
@@ -2839,6 +2950,7 @@ const namaProgram = daftarProgram.join(', ');
 
   hasilSection.style.display = 'block';
   document.getElementById('btnPrintPU').style.display = 'inline-block';
+  ambilLokasiUser();
   
   if(jht.checked){
 
@@ -3363,6 +3475,110 @@ window.printSection = function(){
 };
 
 });
+
+
+const kantorBPJS = [
+
+{nama:"BPJS Ketenagakerjaan Surabaya Karimunjawa", alamat:"Jl. Karimunjawa No.43 Surabaya", telp:"(031) 3572747", lat:-7.2575, lng:112.7521},
+{nama:"BPJS Ketenagakerjaan Surabaya Rungkut", alamat:"Jl. Raya Rungkut Industri Surabaya", telp:"(031) 8702345", lat:-7.3195, lng:112.7673},
+{nama:"BPJS Ketenagakerjaan Surabaya Tanjung Perak", alamat:"Jl. Kalimas Baru Surabaya", telp:"(031) 3291234", lat:-7.2099, lng:112.7398},
+{nama:"BPJS Ketenagakerjaan Surabaya Darmo", alamat:"Jl. Raya Darmo Surabaya", telp:"(031) 5671234", lat:-7.2817, lng:112.7378},
+
+{nama:"BPJS Ketenagakerjaan Sidoarjo", alamat:"Jl. Raya Juanda Sidoarjo", telp:"(031) 8921234", lat:-7.4478, lng:112.7183},
+{nama:"BPJS Ketenagakerjaan Gresik", alamat:"Jl. Dr Wahidin Sudirohusodo Gresik", telp:"(031) 3951234", lat:-7.1569, lng:112.6555},
+{nama:"BPJS Ketenagakerjaan Bangkalan", alamat:"Jl. Soekarno Hatta Bangkalan", telp:"(031) 3091234", lat:-7.0462, lng:112.7355},
+{nama:"BPJS Ketenagakerjaan Sampang", alamat:"Jl. Jamaluddin Sampang", telp:"(0323) 321234", lat:-7.1870, lng:113.2394},
+{nama:"BPJS Ketenagakerjaan Pamekasan", alamat:"Jl. Jokotole Pamekasan", telp:"(0324) 321234", lat:-7.1565, lng:113.4820},
+{nama:"BPJS Ketenagakerjaan Sumenep", alamat:"Jl. Trunojoyo Sumenep", telp:"(0328) 321234", lat:-7.0167, lng:113.8667},
+
+{nama:"BPJS Ketenagakerjaan Lamongan", alamat:"Jl. Basuki Rahmat Lamongan", telp:"(0322) 321234", lat:-7.1138, lng:112.4175},
+{nama:"BPJS Ketenagakerjaan Tuban", alamat:"Jl. Basuki Rahmat Tuban", telp:"(0356) 321234", lat:-6.8945, lng:112.0478},
+{nama:"BPJS Ketenagakerjaan Bojonegoro", alamat:"Jl. Veteran Bojonegoro", telp:"(0353) 321234", lat:-7.1509, lng:111.8861},
+
+{nama:"BPJS Ketenagakerjaan Mojokerto", alamat:"Jl. Gajah Mada Mojokerto", telp:"(0321) 321234", lat:-7.4722, lng:112.4336},
+{nama:"BPJS Ketenagakerjaan Jombang", alamat:"Jl. KH Wahid Hasyim Jombang", telp:"(0321) 861234", lat:-7.5450, lng:112.2330},
+{nama:"BPJS Ketenagakerjaan Pasuruan", alamat:"Jl. Panglima Sudirman Pasuruan", telp:"(0343) 421234", lat:-7.6450, lng:112.9075},
+{nama:"BPJS Ketenagakerjaan Probolinggo", alamat:"Jl. Panglima Sudirman Probolinggo", telp:"(0335) 421234", lat:-7.7543, lng:113.2159},
+
+{nama:"BPJS Ketenagakerjaan Malang", alamat:"Jl. Raden Panji Suroso Malang", telp:"(0341) 491234", lat:-7.9666, lng:112.6326},
+{nama:"BPJS Ketenagakerjaan Batu", alamat:"Jl. Panglima Sudirman Batu", telp:"(0341) 593123", lat:-7.8671, lng:112.5239},
+
+{nama:"BPJS Ketenagakerjaan Kediri", alamat:"Jl. Brawijaya Kediri", telp:"(0354) 681234", lat:-7.8160, lng:112.0110},
+{nama:"BPJS Ketenagakerjaan Blitar", alamat:"Jl. Ahmad Yani Blitar", telp:"(0342) 811234", lat:-8.0982, lng:112.1681},
+{nama:"BPJS Ketenagakerjaan Tulungagung", alamat:"Jl. Ahmad Yani Tulungagung", telp:"(0355) 321234", lat:-8.0657, lng:111.9035},
+{nama:"BPJS Ketenagakerjaan Trenggalek", alamat:"Jl. Panglima Sudirman Trenggalek", telp:"(0355) 791234", lat:-8.0549, lng:111.7160},
+
+{nama:"BPJS Ketenagakerjaan Madiun", alamat:"Jl. Pahlawan Madiun", telp:"(0351) 451234", lat:-7.6298, lng:111.5239},
+{nama:"BPJS Ketenagakerjaan Ngawi", alamat:"Jl. Yos Sudarso Ngawi", telp:"(0351) 741234", lat:-7.4039, lng:111.4460},
+{nama:"BPJS Ketenagakerjaan Magetan", alamat:"Jl. Ahmad Yani Magetan", telp:"(0351) 891234", lat:-7.6493, lng:111.3380},
+{nama:"BPJS Ketenagakerjaan Nganjuk", alamat:"Jl. Ahmad Yani Nganjuk", telp:"(0358) 321234", lat:-7.6051, lng:111.9030},
+{nama:"BPJS Ketenagakerjaan Ponorogo", alamat:"Jl. Diponegoro Ponorogo", telp:"(0352) 481234", lat:-7.8650, lng:111.4667},
+{nama:"BPJS Ketenagakerjaan Pacitan", alamat:"Jl. Ahmad Yani Pacitan", telp:"(0357) 881234", lat:-8.1976, lng:111.1047},
+
+{nama:"BPJS Ketenagakerjaan Jember", alamat:"Jl. Gajah Mada Jember", telp:"(0331) 481234", lat:-8.1724, lng:113.6873},
+{nama:"BPJS Ketenagakerjaan Banyuwangi", alamat:"Jl. Brawijaya Banyuwangi", telp:"(0333) 421234", lat:-8.2190, lng:114.3691},
+{nama:"BPJS Ketenagakerjaan Bondowoso", alamat:"Jl. Ahmad Yani Bondowoso", telp:"(0332) 421234", lat:-7.9137, lng:113.8217},
+{nama:"BPJS Ketenagakerjaan Situbondo", alamat:"Jl. Basuki Rahmat Situbondo", telp:"(0338) 671234", lat:-7.7067, lng:114.0098},
+
+{nama:"BPJS Ketenagakerjaan Lumajang", alamat:"Jl. Panglima Sudirman Lumajang", telp:"(0334) 881234", lat:-8.1335, lng:113.2242}
+
+];
+
+function ambilLokasiUser(){
+
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(function(pos){
+
+let latUser = pos.coords.latitude;
+let lngUser = pos.coords.longitude;
+
+cariKantorTerdekat(latUser,lngUser);
+
+});
+
+}
+
+}
+
+function cariKantorTerdekat(lat,lng){
+
+let jarakMin = Infinity;
+let kantorDekat = null;
+
+kantorBPJS.forEach(kantor=>{
+
+let jarak = Math.sqrt(
+Math.pow(lat-kantor.lat,2) +
+Math.pow(lng-kantor.lng,2)
+);
+
+if(jarak < jarakMin){
+jarakMin = jarak;
+kantorDekat = kantor;
+}
+
+});
+
+if(kantorDekat){
+
+document.getElementById("namaKantor").innerHTML =
+"<b>"+kantorDekat.nama+"</b>";
+
+document.getElementById("alamatKantor").innerHTML =
+kantorDekat.alamat;
+
+document.getElementById("telpKantor").innerHTML =
+kantorDekat.telp;
+
+document.getElementById("mapsKantor").href =
+"https://www.google.com/maps?q="+kantorDekat.lat+","+kantorDekat.lng;
+
+document.getElementById("kontakBPJS").style.display="block";
+
+}
+
+}
 
 </script>
 
