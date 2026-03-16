@@ -3527,6 +3527,48 @@ const kantorBPJS = [
 
 ];
 
+async function geocodeAlamat(alamat){
+
+let url =
+"https://nominatim.openstreetmap.org/search?format=json&q=" +
+encodeURIComponent(alamat);
+
+let res = await fetch(url);
+let data = await res.json();
+
+if(data.length > 0){
+
+return {
+lat: parseFloat(data[0].lat),
+lng: parseFloat(data[0].lon)
+};
+
+}
+
+return null;
+
+}
+
+async function isiKoordinat(){
+
+for(let kantor of kantorBPJS){
+
+let hasil = await geocodeAlamat(
+kantor.nama + " " + kantor.alamat
+);
+
+if(hasil){
+
+kantor.lat = hasil.lat;
+kantor.lng = hasil.lng;
+
+}
+
+}
+
+}
+isiKoordinat();
+
 function ambilLokasiUser(){
 
 if(navigator.geolocation){
@@ -3546,10 +3588,28 @@ cariKantorTerdekat(latUser,lngUser);
 
 function cariKantorTerdekat(lat,lng){
 
-// sementara kita ambil kantor pertama dari database
-// nanti bisa kita kembangkan lagi jika ada koordinat
+let jarakMin = Infinity;
+let kantorDekat = null;
 
-let kantorDekat = kantorBPJS[0];
+kantorBPJS.forEach(kantor=>{
+
+if(!kantor.lat) return;
+
+let jarak = hitungJarak(
+lat,
+lng,
+kantor.lat,
+kantor.lng
+);
+
+if(jarak < jarakMin){
+
+jarakMin = jarak;
+kantorDekat = kantor;
+
+}
+
+});
 
 if(kantorDekat){
 
@@ -3564,7 +3624,7 @@ document.getElementById("mapsKantor").href =
 encodeURIComponent(kantorDekat.nama + " " + kantorDekat.alamat);
 
 document.getElementById("jarakKantor").innerHTML =
-"Lokasi kantor berdasarkan data cabang BPJS";
+"📏 "+jarakMin.toFixed(1)+" km dari lokasi Anda";
 
 document.getElementById("kontakBPJS").style.display="block";
 
