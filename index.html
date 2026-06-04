@@ -439,6 +439,48 @@ th{background:#f1f5ff}
 }
 
 
+.pu-card:has(input:checked),
+.bpu-card:has(input:checked),
+.jakon-card:has(input:checked){
+  background:#fff;
+  border:2px solid #000;
+  color:#000;
+  box-shadow:none;
+}
+
+.pu-card:has(input:checked) strong,
+.pu-card:has(input:checked) small,
+.bpu-card:has(input:checked) strong,
+.bpu-card:has(input:checked) small,
+.jakon-card:has(input:checked) strong,
+.jakon-card:has(input:checked) small{
+  color:#000;
+}
+
+.pu-card{
+  background:#0a4fb3;
+  border-color:#0a4fb3;
+}
+
+.bpu-card{
+  background:#009688;
+  border-color:#009688;
+}
+
+.jakon-card{
+  background:#ff9800;
+  border-color:#ff9800;
+}
+
+.pu-card strong,
+.pu-card small,
+.bpu-card strong,
+.bpu-card small,
+.jakon-card strong,
+.jakon-card small{
+  color:#fff;
+}
+
 
 @media print {
 
@@ -679,37 +721,40 @@ color:#555;
 </div>
   <h2>Simulasi Iuran BPJS Ketenagakerjaan</h2>
 
-  <div class="section" id="landingSection" style="justify-content:center" >
-    <label><b><center>Pilih Jenis Kepesertaan</center></b></label>
+  <div class="section" id="landingSection" style="justify-content:center">
+  <label><b><center>Pilih Jenis Kepesertaan</center></b></label>
 
-    <div class="option-row" style="justify-content:center">
-	<label class="option-card">
-  <input type="radio" name="kepesertaan" onclick="showPU()">
-  <span>
-    <strong>PU</strong>
-    <small>Penerima Upah</small>
-  </span>
-</label>
-      <label class="option-card">
-        <input type="radio" name="kepesertaan" onclick="showBPU()">
-        <span>
-          <strong>BPU</strong>
-          <small>Bukan Penerima Upah</small>
-        </span>
-      </label>
+  <div class="option-row" style="justify-content:center">
 
-      
+    <!-- PU -->
+    <label class="option-card pu-card">
+      <input type="radio" name="kepesertaan" onclick="showPU()">
+      <span>
+        <strong>PU</strong>
+        <small>Penerima Upah</small>
+      </span>
+    </label>
 
-<label class="option-card">
-  <input type="radio" name="kepesertaan" onclick="showJakon()">
-  <span>
-    <strong>JAKON</strong>
-    <small>Jasa Konstruksi</small>
-  </span>
-</label>
-    </div>
-	
+    <!-- BPU -->
+    <label class="option-card bpu-card">
+      <input type="radio" name="kepesertaan" onclick="showBPU()">
+      <span>
+        <strong>BPU</strong>
+        <small>Bukan Penerima Upah</small>
+      </span>
+    </label>
+
+    <!-- JAKON -->
+    <label class="option-card jakon-card">
+      <input type="radio" name="kepesertaan" onclick="showJakon()">
+      <span>
+        <strong>JAKON</strong>
+        <small>Jasa Konstruksi</small>
+      </span>
+    </label>
+
   </div>
+</div>
 
 <div class="section" id="formBPU" style="display:none">
 
@@ -1155,6 +1200,19 @@ Manfaat minimum : Rp 411.400 | Manfaat maksimum : Rp 4.932.300 (Tahun 2026)
   </div>
 </div>
 
+<div class="action-row">
+    <button
+  class="btn-primary"
+  onclick="window.open(
+  'https://ejakon.bpjsketenagakerjaan.go.id/cek-kuitansi',
+  '_blank'
+)">
+📄 Cek Nomor Kuitansi Iuran Jasa Konstruksi
+</button>
+  </div>
+<br>
+
+
 
   <div class="kontrak-row">
   <div class="kontrak-input">
@@ -1171,35 +1229,10 @@ Manfaat minimum : Rp 411.400 | Manfaat maksimum : Rp 4.932.300 (Tahun 2026)
     <button class="btn-primary" onclick="hitungJakon()">Hitung</button>
     <button class="btn-danger" onclick="resetJakon()">Reset</button>
   </div>
-<div class="section" id="cekKuitansiFrame" style="display:block">
 
-  <h3>📄 Cek Kuitansi JAKON</h3>
 
-  <p style="color:#666;margin-top:-5px">
-    Verifikasi nomor kuitansi dan lihat detail pembayaran proyek
-    Jasa Konstruksi.
-  </p>
 
-  <div class="iframe-card">
 
-    <div class="iframe-header">
-      <span>eJAKON - Cek Kuitansi</span>
-
-      <a href="https://ejakon.bpjsketenagakerjaan.go.id/cek-kuitansi"
-         target="_blank"
-         class="open-new">
-        ↗ Buka Halaman Penuh
-      </a>
-    </div>
-
-    <iframe
-      src="https://ejakon.bpjsketenagakerjaan.go.id/cek-kuitansi"
-      loading="lazy">
-    </iframe>
-
-  </div>
-
-</div>
 </div>
 
 
@@ -1381,7 +1414,7 @@ Catatan: Estimasi manfaat Jaminan Kecelakaan Kerja (JKK) pada simulasi Jasa Kons
       (Klik Disini) </a><br> 	  
 
 <div class="cta-section">
-  <h3>Pendaftaran Kepesertaan</h3>
+  <h2>Pendaftaran Kepesertaan</h2>
   <div class="cta-buttons">
     <a href="https://pom.bpjsketenagakerjaan.go.id/pu" target="_blank" class="cta-btn pu">
       Segmen PU
@@ -1429,7 +1462,7 @@ Kantor Cabang terdekat berdasarkan lokasi Anda.
 </p>
  
 </div>
-<div class="footer-note">© 2026. BPJS Ketenagakerjaan Kantor Wilayah Jawa Timur</div>
+<div class="footer-note">2026 BPJS Ketenagakerjaan | ©annsrchm </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -3565,6 +3598,7 @@ window.resetJakon = function(){
 
   // scroll kembali ke form
   document.getElementById('formJakon')
+   document.getElementById('cekKuitansiJakon')
     .scrollIntoView({ behavior:'smooth' });
 
 }
@@ -3723,7 +3757,6 @@ ambilLokasiUser();
 
 </body>
 </html>
-
 
 
 
