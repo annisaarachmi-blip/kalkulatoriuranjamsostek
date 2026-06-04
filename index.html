@@ -3059,16 +3059,14 @@ const namaProgram = daftarProgram.join(', ');
 
  kesimpulan.innerHTML = `
 <p style="font-size:15px">
-  Berdasarkan data yang diinput, kepesertaan BPJS Ketenagakerjaan
-  yang diikuti terdiri dari <b>${jumlahProgram} program</b>,
-  yaitu <b>${namaProgram}</b>.
+  <b>${jumlahProgram} program</b>  yang diikuti terdiri dari yaitu <b>${namaProgram}</b>.
 </p>
 
 <p style="font-size:15px">
   Total iuran BPJS Ketenagakerjaan yang wajib dibayarkan setiap bulan untuk <b>${org} pekerja</b>, 
   dengan upah yang dilaporkan sebesar <b>Rp ${format(upah)}</b> per pekerja,
   adalah sebesar <b>Rp ${format(Math.round(totalPerusahaanBln + totalPekerjaBln))}</b>, 
-  yang terdiri dari iuran yang ditanggung oleh pemberi kerja dan pekerja dengan rincian sebagai berikut:
+  yang terdiri dari :
 </p>
 
 <ul style="font-size:15px">
